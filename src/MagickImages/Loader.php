@@ -8,28 +8,26 @@
  *
  * @copyright  bit3 UG 2013
  * @author     Tristan Lins <tristan.lins@bit3.de>
- * @package    magickimages
+ * @author     Richard Henkenjohann 2016
+ * @package    MagickImages
  * @license    LGPL-3.0+
- * @link       http://avisota.org
  */
 
-
 namespace MagickImages;
+use MagickImages\Hook\IHook;
 
 
 /**
- * Class MagickImages
- *
+ * Class Loader
  * Provide an ImageMagick based image resize function.
  *
- * @package magickimages
+ * @package MagickImages
  */
 class Loader
 {
+
 	/**
-	 * @return HookInterface
-	 * @SuppressWarnings(PHPMD.Superglobals)
-	 * @SuppressWarnings(PHPMD.CamelCaseVariableName)
+	 * @return IHook
 	 */
 	static public function getInstance()
 	{

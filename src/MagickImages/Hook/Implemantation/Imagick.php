@@ -8,90 +8,108 @@
  *
  * @copyright  bit3 UG 2013
  * @author     Tristan Lins <tristan.lins@bit3.de>
- * @package    magickimages
+ * @author     Richard Henkenjohann 2016
+ * @package    MagickImages
  * @license    LGPL-3.0+
- * @link       http://avisota.org
  */
 
 
-namespace MagickImages;
+namespace MagickImages\Hook\Implementation;
+
+use MagickImages\Hook\IHook;
+use MagickImages\Optimizer\IOptimizer;
 
 
 /**
- * Class ImagickHookImplementation
+ * Class Imagick
  *
- * @package magickimages
+ * @package MagickImages
  */
-class ImagickHookImplementation implements HookInterface
+class Imagick implements IHook
 {
+
 	/**
-	 * @var OptimizerInterface
+	 * @var IOptimizer
 	 */
 	protected $optimizer;
+
 
 	/**
 	 * @var float
 	 */
 	protected $jpegQuality;
 
+
 	/**
 	 * @var bool
 	 */
 	protected $smhEnabled;
+
 
 	/**
 	 * @var string
 	 */
 	protected $filter;
 
+
 	/**
 	 * @var bool
 	 */
 	protected $blurEnabled;
+
 
 	/**
 	 * @var float
 	 */
 	protected $blurRadius;
 
+
 	/**
 	 * @var float
 	 */
 	protected $blurSigma;
+
 
 	/**
 	 * @var bool
 	 */
 	protected $unsharpMaskEnabled;
 
+
 	/**
 	 * @var float
 	 */
 	protected $unsharpMaskRadius;
+
 
 	/**
 	 * @var float
 	 */
 	protected $unsharpMaskSigma;
 
+
 	/**
 	 * @var float
 	 */
 	protected $unsharpMaskAmount;
+
 
 	/**
 	 * @var float
 	 */
 	protected $unsharpMaskThreshold;
 
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setOptimizer(OptimizerInterface $optimizer = null)
+	public function setOptimizer(IOptimizer $optimizer = null)
 	{
 		$this->optimizer = $optimizer;
+
 		return $this;
 	}
+
 
 	/**
 	 * {@inheritdoc}
@@ -101,14 +119,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->optimizer;
 	}
 
+
 	/**
 	 * @param float $jpegQuality
+	 *
+	 * @return $this
 	 */
 	public function setJpegQuality($jpegQuality)
 	{
 		$this->jpegQuality = $jpegQuality;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -118,14 +141,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->jpegQuality;
 	}
 
+
 	/**
 	 * @param boolean $smhEnabled
+	 *
+	 * @return $this
 	 */
 	public function setSmhEnabled($smhEnabled)
 	{
-		$this->smhEnabled = (bool) $smhEnabled;
+		$this->smhEnabled = (bool)$smhEnabled;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return boolean
@@ -135,14 +163,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->smhEnabled;
 	}
 
+
 	/**
 	 * @param string $filter
+	 *
+	 * @return $this
 	 */
 	public function setFilter($filter)
 	{
 		$this->filter = $filter;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return string
@@ -152,14 +185,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->filter;
 	}
 
+
 	/**
 	 * @param boolean $blurEnabled
+	 *
+	 * @return $this
 	 */
 	public function setBlurEnabled($blurEnabled)
 	{
-		$this->blurEnabled = (bool) $blurEnabled;
+		$this->blurEnabled = (bool)$blurEnabled;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return boolean
@@ -169,14 +207,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->blurEnabled;
 	}
 
+
 	/**
 	 * @param float $blurRadius
+	 *
+	 * @return $this
 	 */
 	public function setBlurRadius($blurRadius)
 	{
 		$this->blurRadius = $blurRadius;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -186,14 +229,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->blurRadius;
 	}
 
+
 	/**
 	 * @param float $blurSigma
+	 *
+	 * @return $this
 	 */
 	public function setBlurSigma($blurSigma)
 	{
 		$this->blurSigma = $blurSigma;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -203,14 +251,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->blurSigma;
 	}
 
+
 	/**
 	 * @param boolean $unsharpMaskEnabled
+	 *
+	 * @return $this
 	 */
 	public function setUnsharpMaskEnabled($unsharpMaskEnabled)
 	{
-		$this->unsharpMaskEnabled = (bool) $unsharpMaskEnabled;
+		$this->unsharpMaskEnabled = (bool)$unsharpMaskEnabled;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return boolean
@@ -220,14 +273,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->unsharpMaskEnabled;
 	}
 
+
 	/**
 	 * @param float $unsharpMaskRadius
+	 *
+	 * @return $this
 	 */
 	public function setUnsharpMaskRadius($unsharpMaskRadius)
 	{
 		$this->unsharpMaskRadius = $unsharpMaskRadius;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -237,14 +295,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->unsharpMaskRadius;
 	}
 
+
 	/**
 	 * @param float $unsharpMaskSigma
+	 *
+	 * @return $this
 	 */
 	public function setUnsharpMaskSigma($unsharpMaskSigma)
 	{
 		$this->unsharpMaskSigma = $unsharpMaskSigma;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -254,14 +317,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->unsharpMaskSigma;
 	}
 
+
 	/**
 	 * @param float $unsharpMaskAmount
+	 *
+	 * @return $this
 	 */
 	public function setUnsharpMaskAmount($unsharpMaskAmount)
 	{
 		$this->unsharpMaskAmount = $unsharpMaskAmount;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -271,14 +339,19 @@ class ImagickHookImplementation implements HookInterface
 		return $this->unsharpMaskAmount;
 	}
 
+
 	/**
 	 * @param float $unsharpMaskThreshold
+	 *
+	 * @return $this
 	 */
 	public function setUnsharpMaskThreshold($unsharpMaskThreshold)
 	{
 		$this->unsharpMaskThreshold = $unsharpMaskThreshold;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return float
@@ -288,39 +361,57 @@ class ImagickHookImplementation implements HookInterface
 		return $this->unsharpMaskThreshold;
 	}
 
-	/**
+
+	/** @noinspection PhpHierarchyChecksInspection
 	 * {@inheritdoc}
 	 */
-	public function get($image, $width, $height, $mode, $cacheName, \File $file, $target)
+	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget)
 	{
-		if (!$width && !$height) {
+		if (!$width && !$height)
+		{
 			return false;
 		}
 
-		$cacheName = $this->process($image, $width, $height, $mode, $cacheName, $file);
+		$strCacheName = $this->process($image, $width, $height, $mode, $strCacheName, $file);
 
 		// Set the file permissions when the Safe Mode Hack is used
-		if ($this->smhEnabled) {
+		if ($this->smhEnabled)
+		{
 			\Files::getInstance()
-				->chmod($cacheName, 0644);
+				->chmod($strCacheName, 0644);
 		}
 
-		if ($target) {
+		if ($strTarget)
+		{
 			\Files::getInstance()
-				->copy($cacheName, $target);
-			return $target;
+				->copy($strCacheName, $strTarget);
+
+			return $strTarget;
 		}
 
 		// Return the path to new image
-		return $cacheName;
+		return $strCacheName;
 	}
 
+
+	/**
+	 * @param string  $image
+	 * @param integer $width
+	 * @param integer $height
+	 * @param string  $mode
+	 * @param  string $cacheName
+	 * @param \File   $file
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
 	protected function process($image, $width, $height, $mode, $cacheName, \File $file)
 	{
 		// detect image format
 		$format = $file->extension;
 
-		if ($format != 'jpg' && $format != 'png' && $format != 'gif') {
+		if ($format != 'jpg' && $format != 'png' && $format != 'gif')
+		{
 			$format = 'jpg';
 		}
 
@@ -334,7 +425,8 @@ class ImagickHookImplementation implements HookInterface
 		$imagick->setImageFormat($format);
 
 		// set the jpeg quality
-		if ($format == 'jpg') {
+		if ($format == 'jpg')
+		{
 			$imagick->setImageCompression(\Imagick::COMPRESSION_JPEG);
 			$imagick->setImageCompressionQuality($this->jpegQuality);
 		}
@@ -343,12 +435,14 @@ class ImagickHookImplementation implements HookInterface
 		$this->blurImage($imagick);
 		$this->unsharpImage($imagick);
 
-		if (!$imagick->writeImage(TL_ROOT . '/' . $cacheName)) {
+		if (!$imagick->writeImage(TL_ROOT . '/' . $cacheName))
+		{
 			throw new \Exception('Could not write resized image');
 		}
 
 		return $this->optimize($cacheName);
 	}
+
 
 	/**
 	 * @param \File    $file
@@ -356,8 +450,6 @@ class ImagickHookImplementation implements HookInterface
 	 * @param string   $width
 	 * @param string   $height
 	 * @param string   $mode
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 */
 	protected function resizeAndCrop(\File $file, \Imagick $imagick, $width, $height, $mode)
 	{
@@ -365,43 +457,52 @@ class ImagickHookImplementation implements HookInterface
 		$filterName = 'FILTER_' . strtoupper(
 				preg_replace('#[^\w]#', '', $this->filter)
 			);
-		$class      = new \ReflectionClass('Imagick');
-		$filter     = $class->getConstant($filterName);
+		$class = new \ReflectionClass('Imagick');
+		$filter = $class->getConstant($filterName);
 
 		// the target size
-		$widthNumeric  = intval($width);
+		$widthNumeric = intval($width);
 		$heightNumeric = intval($height);
 
 		// Mode-specific changes
-		if ($widthNumeric && $heightNumeric) {
-			if ($mode == 'proportional') {
-				if ($file->width >= $file->height) {
+		if ($widthNumeric && $heightNumeric)
+		{
+			if ($mode == 'proportional')
+			{
+				if ($file->width >= $file->height)
+				{
 					unset($height, $heightNumeric);
 				}
-				else {
+				else
+				{
 					unset($width, $widthNumeric);
 				}
 			}
 
-			if ($mode == 'box') {
-				if (ceil($file->height * $width / $file->width) <= $heightNumeric) {
+			if ($mode == 'box')
+			{
+				if (ceil($file->height * $width / $file->width) <= $heightNumeric)
+				{
 					unset($height, $heightNumeric);
 				}
-				else {
+				else
+				{
 					unset($width, $widthNumeric);
 				}
 			}
 		}
 
 		// Resize width and height and crop the image if necessary
-		if ($widthNumeric && $heightNumeric) {
-			$dblSrcAspectRatio    = $file->width / $file->height;
+		if ($widthNumeric && $heightNumeric)
+		{
+			$dblSrcAspectRatio = $file->width / $file->height;
 			$dblTargetAspectRatio = $widthNumeric / $heightNumeric;
 
 			// Advanced crop modes
 			list($horizMode, $vertMode) = explode('_', $mode);
 
-			if ($dblSrcAspectRatio == $dblTargetAspectRatio) {
+			if ($dblSrcAspectRatio == $dblTargetAspectRatio)
+			{
 				$imagick->resizeImage(
 					$widthNumeric,
 					$heightNumeric,
@@ -409,86 +510,109 @@ class ImagickHookImplementation implements HookInterface
 					1
 				);
 			}
-			else if ($dblSrcAspectRatio < $dblTargetAspectRatio) {
-				$imagick->resizeImage(
-					$widthNumeric,
-					0,
-					$filter,
-					1
-				);
+			else
+			{
+				if ($dblSrcAspectRatio < $dblTargetAspectRatio)
+				{
+					$imagick->resizeImage(
+						$widthNumeric,
+						0,
+						$filter,
+						1
+					);
 
-				switch ($vertMode) {
-					case 'top':
-						$positionY = 0;
-						break;
-					case 'bottom':
-						$positionY = $imagick->getImageHeight() - $heightNumeric;
-						break;
-					default:
-						$positionY = ceil(($imagick->getImageHeight() - $heightNumeric) / 2);
-						break;
+					switch ($vertMode)
+					{
+						case 'top':
+							$positionY = 0;
+							break;
+						case 'bottom':
+							$positionY = $imagick->getImageHeight() - $heightNumeric;
+							break;
+						default:
+							$positionY = ceil(($imagick->getImageHeight() - $heightNumeric) / 2);
+							break;
+					}
+
+					$imagick->cropImage(
+						$widthNumeric,
+						$heightNumeric,
+						0,
+						$positionY
+					);
 				}
+				else
+				{
+					if ($dblSrcAspectRatio > $dblTargetAspectRatio)
+					{
+						$imagick->resizeImage(
+							0,
+							$heightNumeric,
+							$filter,
+							1
+						);
 
-				$imagick->cropImage(
-					$widthNumeric,
-					$heightNumeric,
-					0,
-					$positionY
-				);
-			}
-			else if ($dblSrcAspectRatio > $dblTargetAspectRatio) {
-				$imagick->resizeImage(
-					0,
-					$heightNumeric,
-					$filter,
-					1
-				);
+						switch ($horizMode)
+						{
+							case 'left':
+								$positionX = 0;
+								break;
+							case 'right':
+								$positionX = $imagick->getImageWidth() - $widthNumeric;
+								break;
+							default:
+								$positionX = ceil(($imagick->getImageWidth() - $widthNumeric) / 2);
+								break;
+						}
 
-				switch ($horizMode) {
-					case 'left':
-						$positionX = 0;
-						break;
-					case 'right':
-						$positionX = $imagick->getImageWidth() - $widthNumeric;
-						break;
-					default:
-						$positionX = ceil(($imagick->getImageWidth() - $widthNumeric) / 2);
-						break;
+						$imagick->cropImage(
+							$widthNumeric,
+							$heightNumeric,
+							$positionX,
+							0
+						);
+					}
 				}
-
-				$imagick->cropImage(
-					$widthNumeric,
-					$heightNumeric,
-					$positionX,
-					0
-				);
 			}
 		}
 
 		// resize by width
-		else if ($widthNumeric) {
-			$imagick->resizeImage(
-				$widthNumeric,
-				ceil($widthNumeric * $file->height / $file->width),
-				$filter,
-				1
-			);
-		}
+		else
+		{
+			if ($widthNumeric)
+			{
+				$imagick->resizeImage(
+					$widthNumeric,
+					ceil($widthNumeric * $file->height / $file->width),
+					$filter,
+					1
+				);
+			}
 
-		// resize by height
-		else if ($heightNumeric) {
-			$imagick->resizeImage(
-				ceil($heightNumeric * $file->width / $file->height),
-				$heightNumeric,
-				$filter,
-				1
-			);
+			// resize by height
+			else
+			{
+				if ($heightNumeric)
+				{
+					$imagick->resizeImage(
+						ceil($heightNumeric * $file->width / $file->height),
+						$heightNumeric,
+						$filter,
+						1
+					);
+				}
+			}
 		}
 	}
 
+
+	/**
+	 * @param \Imagick $imagick
+	 */
 	protected function blurImage(\Imagick $imagick)
 	{
-		if ($this->blurEnabled) {
+		if ($this->blurEnabled)
+		{
 			$imagick->blurimage(
 				$this->blurRadius,
 				$this->blurSigma
@@ -496,9 +620,14 @@ class ImagickHookImplementation implements HookInterface
 		}
 	}
 
+
+	/**
+	 * @param \Imagick $imagick
+	 */
 	protected function unsharpImage(\Imagick $imagick)
 	{
-		if ($this->unsharpMaskEnabled) {
+		if ($this->unsharpMaskEnabled)
+		{
 			$imagick->unsharpMaskImage(
 				$this->unsharpMaskRadius,
 				$this->unsharpMaskSigma,
@@ -508,11 +637,19 @@ class ImagickHookImplementation implements HookInterface
 		}
 	}
 
+
+	/**
+	 * @param $cacheName
+	 *
+	 * @return string
+	 */
 	protected function optimize($cacheName)
 	{
-		if ($this->optimizer) {
+		if ($this->optimizer)
+		{
 			return $this->optimizer->optimize($cacheName);
 		}
+
 		return $cacheName;
 	}
 }

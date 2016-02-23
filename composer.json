@@ -1,9 +1,8 @@
 {
-	"name": "bit3/contao-magickimages",
+	"name": "richardhj/contao-magickimages",
 	"description": "ImageMagick integration for Contao OpenSource CMS",
 	"keywords": ["contao", "images", "imagemagick"],
 	"type": "contao-module",
-	"homepage": "http://bit3.de",
 	"license": "LGPL-3.0+",
 	"authors": [
 		{
@@ -11,25 +10,25 @@
 			"email": "tristan.lins@bit3.de",
 			"homepage": "http://bit3.de",
 			"role": "Developer"
+		},
+		{
+			"name": "Richard Henkenjohann",
+			"role": "Developer"
 		}
 	],
 	"support": {
 		"email": "info@bit3.de",
-		"issues": "https://github.com/bit3/contao-magickimages/issues",
+		"issues": "https://github.com/richardhj/contao-magickimages/issues",
 		"wiki": "http://de.contaowiki.org/MagickImages",
 		"irc": "irc://irc.freenode.org/contao.dev",
-		"source": "https://github.com/bit3/contao-magickimages"
+		"source": "https://github.com/richardhj/contao-magickimages"
 	},
 	"require": {
 		"php": ">=5.3",
-		"contao/core": "3.1.*",
+		"contao/core": ">=3.1",
 		"contao-community-alliance/composer-installer": "*",
-		"bit3/contao-dependency-container": "~1",
+		"contao-community-alliance/dependency-container": "*",
 		"symfony/process": "2.3.*"
-	},
-	"require-dev": {
-		"squizlabs/php_codesniffer": "1.*",
-		"bit3/php-coding-standard": "@dev"
 	},
 	"replace": {
 		"contao-legacy/magickimages": "*"
@@ -45,8 +44,5 @@
 				"contao": "system/modules/magickimages"
 			}
 		},
-		"branch-alias": {
-			"dev-master": "2.x-dev"
-		}
 	}
 }
