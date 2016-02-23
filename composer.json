@@ -43,6 +43,6 @@
 			"sources": {
 				"contao": "system/modules/magickimages"
 			}
-		},
+		}
 	}
 }
