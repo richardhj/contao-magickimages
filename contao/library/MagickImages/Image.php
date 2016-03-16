@@ -32,7 +32,7 @@ class Image extends \Contao\Image
 	 */
 	public function getCacheName()
 	{
-		$strFallbackFormat = 'png'; //@todo configurable
+		$strFallbackFormat = \Config::get('magickimages_fallback_extension') ?: 'jpg';
 
 		if (!in_array($this->fileObj->extension, ['jpg', 'png', 'gif']))
 		{

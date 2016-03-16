@@ -25,7 +25,7 @@ $GLOBALS['TL_DCA']['tl_settings']['palettes']['__selector__'][] = 'magickimages_
 $GLOBALS['TL_DCA']['tl_settings']['palettes']['__selector__'][] = 'magickimages_optipng';
 $GLOBALS['TL_DCA']['tl_settings']['palettes']['__selector__'][] = 'magickimages_advpng';
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{magickimages_legend:hide},magickimages_force,magickimages_implementation,magickimages_filter,magickimages_blur,magickimages_unsharp_mask,magickimages_pngrewrite,magickimages_optipng,magickimages_advpng';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{magickimages_legend:hide},magickimages_force,magickimages_implementation,magickimages_filter,magickimages_fallback_extension,magickimages_blur,magickimages_unsharp_mask,magickimages_pngrewrite,magickimages_optipng,magickimages_advpng';
 
 
 /**
@@ -70,6 +70,14 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['magickimages_filter'] = array
 	'inputType' => 'select',
 	'options'   => array('Box', 'Catrom', 'Cubic', 'Gaussian', 'Hermite', 'Mitchell', 'Point', 'Quadratic', 'Triangle'),
 	'eval'      => array('tl_class' => 'clr')
+);
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['magickimages_fallback_extension'] = array
+(
+	'label'         => &$GLOBALS['TL_LANG']['tl_settings']['magickimages_fallback_extension'],
+	'inputType'     => 'text',
+	'eval'          => array('tl_class' => 'w50'),
+	'save_callback' => array(array('MagickImages\Helper\Dca', 'checkValidFallbackExtension'))
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['magickimages_blur'] = array
