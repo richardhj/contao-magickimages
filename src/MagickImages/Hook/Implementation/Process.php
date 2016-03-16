@@ -453,6 +453,14 @@ class Process implements IHook
 		// set the output path
 		$strTargetPath = TL_ROOT . '/' . $strCacheName;
 
+
+//		if ($objFile->extension == 'pdf')
+//		{
+			//@todo add density if pdf's size is smaller than final size
+//			$objProcessBuilder->add('-density');
+//			$objProcessBuilder->add('288');
+//		}
+
 		// begin build the exec command
 		$objProcessBuilder->add($strSourcePath);
 

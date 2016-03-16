@@ -399,21 +399,21 @@ class Imagick implements IHook
 	 * @param integer $width
 	 * @param integer $height
 	 * @param string  $mode
-	 * @param  string $cacheName
-	 * @param \File   $file
+	 * @param string $strCacheName
+	 * @param \File   $objFile
 	 *
 	 * @return string
 	 * @throws \Exception
 	 */
-	protected function process($image, $width, $height, $mode, $cacheName, \File $file)
+	protected function process($image, $width, $height, $mode, $strCacheName, \File $objFile)
 	{
 		// detect image format
-		$format = $file->extension;
+		$strFormat = strtolower(pathinfo($strCacheName)['extension']); # do not use $objFile->extension because the cache's extension might be set to a fallback extension
 
-		if ($format != 'jpg' && $format != 'png' && $format != 'gif')
-		{
-			$format = 'jpg';
-		}
+//		if (in_array($objFile->extension, ['pdf', 'psd']))
+//		{
+			//@todo only render a pdf's first page or psd's full layer
+//		}
 
 		// load imagick
 		$imagick = new \Imagick();
@@ -422,25 +422,25 @@ class Imagick implements IHook
 		$imagick->readImage(TL_ROOT . '/' . $image);
 
 		// set the output format
-		$imagick->setImageFormat($format);
+		$imagick->setImageFormat($strFormat);
 
 		// set the jpeg quality
-		if ($format == 'jpg')
+		if ($strFormat == 'jpg')
 		{
 			$imagick->setImageCompression(\Imagick::COMPRESSION_JPEG);
 			$imagick->setImageCompressionQuality($this->jpegQuality);
 		}
 
-		$this->resizeAndCrop($file, $imagick, $width, $height, $mode);
+		$this->resizeAndCrop($objFile, $imagick, $width, $height, $mode);
 		$this->blurImage($imagick);
 		$this->unsharpImage($imagick);
 
-		if (!$imagick->writeImage(TL_ROOT . '/' . $cacheName))
+		if (!$imagick->writeImage(TL_ROOT . '/' . $strCacheName))
 		{
 			throw new \Exception('Could not write resized image');
 		}
 
-		return $this->optimize($cacheName);
+		return $this->optimize($strCacheName);
 	}
 
 
