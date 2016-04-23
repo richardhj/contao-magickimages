@@ -53,6 +53,9 @@ interface IHook
 	 * @param string  $strCacheName The cached image path
 	 * @param \File   $file         The image file object
 	 * @param string  $strTarget    An optional target path
+	 * @param \Image  $objImage     The image instance
+	 *
+	 * @return
 	 */
-	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget);
+	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget, \Image $objImage);
 }

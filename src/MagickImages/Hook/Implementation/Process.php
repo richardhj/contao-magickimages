@@ -394,14 +394,14 @@ class Process implements IHook
 	/** @noinspection PhpHierarchyChecksInspection
 	 * {@inheritdoc}
 	 */
-	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget)
+	public function get($image, $width, $height, $mode, $strCacheName, \File $objFile, $strTarget, \Image $objImage)
 	{
 		if (!$width && !$height)
 		{
 			return false;
 		}
 
-		$strCacheName = $this->process($image, $width, $height, $mode, $strCacheName, $file);
+		$strCacheName = $this->process($image, $strCacheName, $objFile, $objImage);
 
 		// Set the file permissions when the Safe Mode Hack is used
 		if ($this->blnSmhEnabled)
@@ -424,16 +424,14 @@ class Process implements IHook
 
 
 	/**
-	 * @param string  $image
-	 * @param integer $width
-	 * @param integer $height
-	 * @param string  $mode
-	 * @param string  $strCacheName
-	 * @param \File   $objFile
+	 * @param string $image        The image path
+	 * @param string $strCacheName The cached image path
+	 * @param \File  $objFile      The image's File instance
+	 * @param \Image $objImage     The image's Image instance
 	 *
 	 * @return string
 	 */
-	protected function process($image, $width, $height, $mode, $strCacheName, \File $objFile)
+	protected function process($image, $strCacheName, \File $objFile, \Image $objImage)
 	{
 		// detect image format
 		$strFormat = strtolower(pathinfo($strCacheName)['extension']); # do not use $objFile->extension because the cache's extension might be set to a fallback extension
@@ -453,14 +451,6 @@ class Process implements IHook
 		// set the output path
 		$strTargetPath = TL_ROOT . '/' . $strCacheName;
 
-
-//		if ($objFile->extension == 'pdf')
-//		{
-			//@todo add density if pdf's size is smaller than final size
-//			$objProcessBuilder->add('-density');
-//			$objProcessBuilder->add('288');
-//		}
-
 		// begin build the exec command
 		$objProcessBuilder->add($strSourcePath);
 
@@ -471,7 +461,7 @@ class Process implements IHook
 			$objProcessBuilder->add($this->fltJpegQuality);
 		}
 
-		$this->resizeAndCrop($objFile, $objProcessBuilder, $width, $height, $mode);
+		$this->resizeAndCrop($objImage, $objProcessBuilder);
 		$this->filterImage($objProcessBuilder);
 		$this->blurImage($objProcessBuilder);
 		$this->unsharpImage($objProcessBuilder);
@@ -492,145 +482,31 @@ class Process implements IHook
 
 
 	/**
-	 * @param \File          $objFile
-	 * @param ProcessBuilder $objProcessBuilder
-	 * @param string         $width
-	 * @param string         $height
-	 * @param string         $mode
+	 * @param \Image         $objImage          The image's Image instance
+	 * @param ProcessBuilder $objProcessBuilder The ProcessBuilder instance
 	 */
-	protected function resizeAndCrop(\File $objFile, ProcessBuilder $objProcessBuilder, $width, $height, $mode)
+	protected function resizeAndCrop(\Image $objImage, ProcessBuilder $objProcessBuilder)
 	{
-		// the target size
-		$intWidth = intval($width);
-		$intHeight = intval($height);
+		// Fetch the sizes and coordinates from Contao's Image instance
+		$arrSizes = $objImage->computeResize();
+		
+		$objProcessBuilder->add('-resize');
+		$objProcessBuilder->add(sprintf
+		(
+			'%ux%u',
+			$arrSizes['target_width'],
+			$arrSizes['target_height']
+		));
 
-		// Mode-specific changes
-		if ($intWidth && $intHeight)
-		{
-			if ($mode == 'proportional')
-			{
-				if ($objFile->width >= $objFile->height)
-				{
-					unset($height, $intHeight);
-				}
-				else
-				{
-					unset($width, $intWidth);
-				}
-			}
-
-			if ($mode == 'box')
-			{
-				if (ceil($objFile->height * $width / $objFile->width) <= $intHeight)
-				{
-					unset($height, $intHeight);
-				}
-				else
-				{
-					unset($width, $intWidth);
-				}
-			}
-		}
-
-		// Resize width and height and crop the image if necessary
-		if ($intWidth && $intHeight)
-		{
-			$fltSrcAspectRatio = $objFile->width / $objFile->height;
-			$fltTargetAspectRatio = $intWidth / $intHeight;
-
-			$objProcessBuilder->add('-resize');
-
-			// Advanced crop modes
-			switch ($mode)
-			{
-				case 'left_top':
-					$gravity = 'NorthWest';
-					break;
-
-				case 'center_top':
-					$gravity = 'North';
-					break;
-
-				case 'right_top':
-					$gravity = 'NorthEast';
-					break;
-
-				case 'left_center':
-					$gravity = 'West';
-					break;
-
-				case 'right_center':
-					$gravity = 'East';
-					break;
-
-				case 'left_bottom':
-					$gravity = 'SouthWest';
-					break;
-
-				case 'center_bottom':
-					$gravity = 'South';
-					break;
-
-				case 'right_bottom':
-					$gravity = 'SouthEast';
-					break;
-
-				default:
-					$gravity = 'Center';
-					break;
-			}
-
-			if ($fltSrcAspectRatio == $fltTargetAspectRatio)
-			{
-				$objProcessBuilder->add($intWidth . 'x' . $intHeight);
-			}
-			else
-			{
-				if ($fltSrcAspectRatio < $fltTargetAspectRatio)
-				{
-					$objProcessBuilder->add($intWidth . 'x' . $intHeight . '^');
-
-					// crop image
-					$objProcessBuilder->add('-gravity');
-					$objProcessBuilder->add($gravity);
-					$objProcessBuilder->add('-extent');
-					$objProcessBuilder->add($intWidth . 'x' . $intHeight);
-				}
-				else
-				{
-					if ($fltSrcAspectRatio > $fltTargetAspectRatio)
-					{
-						$objProcessBuilder->add('0x' . $intHeight . '^');
-
-						// crop image
-						$objProcessBuilder->add('-gravity');
-						$objProcessBuilder->add($gravity);
-						$objProcessBuilder->add('-extent');
-						$objProcessBuilder->add($intWidth . 'x' . $intHeight);
-					}
-				}
-			}
-		}
-
-		// resize by width
-		else
-		{
-			if ($intWidth)
-			{
-				$objProcessBuilder->add('-resize');
-				$objProcessBuilder->add($intWidth . 'x0^');
-			}
-
-			// resize by height
-			else
-			{
-				if ($intHeight)
-				{
-					$objProcessBuilder->add('-resize');
-					$objProcessBuilder->add('0x' . $intHeight . '^');
-				}
-			}
-		}
+		$objProcessBuilder->add('-crop');
+		$objProcessBuilder->add(sprintf
+		(
+			'%ux%u%+d%+d',
+			$arrSizes['width'],
+			$arrSizes['height'],
+			$arrSizes['target_x'] * -1,
+			$arrSizes['target_y'] * -1
+		));
 	}
 
 
