@@ -57,5 +57,5 @@ interface IHook
 	 *
 	 * @return
 	 */
-	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget, \Image $objImage);
+	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget, $objImage);
 }

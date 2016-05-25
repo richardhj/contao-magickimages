@@ -394,7 +394,7 @@ class Process implements IHook
 	/** @noinspection PhpHierarchyChecksInspection
 	 * {@inheritdoc}
 	 */
-	public function get($image, $width, $height, $mode, $strCacheName, \File $objFile, $strTarget, \Image $objImage)
+	public function get($image, $width, $height, $mode, $strCacheName, \File $objFile, $strTarget, $objImage)
 	{
 		if (!$width && !$height)
 		{
@@ -431,7 +431,7 @@ class Process implements IHook
 	 *
 	 * @return string
 	 */
-	protected function process($image, $strCacheName, \File $objFile, \Image $objImage)
+	protected function process($image, $strCacheName, \File $objFile, $objImage)
 	{
 		// detect image format
 		$strFormat = strtolower(pathinfo($strCacheName)['extension']); # do not use $objFile->extension because the cache's extension might be set to a fallback extension
@@ -485,7 +485,7 @@ class Process implements IHook
 	 * @param \Image         $objImage          The image's Image instance
 	 * @param ProcessBuilder $objProcessBuilder The ProcessBuilder instance
 	 */
-	protected function resizeAndCrop(\Image $objImage, ProcessBuilder $objProcessBuilder)
+	protected function resizeAndCrop($objImage, ProcessBuilder $objProcessBuilder)
 	{
 		// Fetch the sizes and coordinates from Contao's Image instance
 		$arrSizes = $objImage->computeResize();
