@@ -32,6 +32,8 @@
         "contao/core": ">=3.1",
         "contao-community-alliance/composer-installer": "*",
         "contao-community-alliance/dependency-container": "*",
+        "contao-community-alliance/meta-palettes": "~1.9",
+        "richardhj/dc-general-single-model": "~1.0",
         "symfony/process": "2.3.*"
     },
     "replace": {

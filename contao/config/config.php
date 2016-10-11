@@ -15,6 +15,15 @@
 
 
 /**
+ * Back end modules
+ */
+$GLOBALS['BE_MOD']['system']['magickimages_config'] = [
+    'tables' => [MagickImages\Model\Config::getTable()],
+    'icon'   => 'settings.gif',
+];
+
+
+/**
  * Implementations
  */
 $GLOBALS['MAGICKIMAGES_IMPLEMENTATIONS'][] = 'process';

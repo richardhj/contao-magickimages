@@ -14,6 +14,8 @@
 
 namespace MagickImages;
 
+use MagickImages\Model\Config as MagickImagesConfig;
+
 
 /**
  * Class Image
@@ -32,7 +34,7 @@ class Image extends \Contao\Image
 	 */
 	public function getCacheName()
 	{
-		$strFallbackFormat = \Config::get('magickimages_fallback_extension') ?: 'jpg';
+        $strFallbackFormat = MagickImagesConfig::getInstance()->fallback_extension ?: 'jpg';
 
 		if (!in_array($this->fileObj->extension, ['jpg', 'png', 'gif']))
 		{
