@@ -10,7 +10,7 @@
 
 namespace MagickImages\Model;
 
-use Ferienpass\Model\AbstractSingleModel;
+use DcGeneral\Contao\Model\AbstractSingleModel;
 
 
 /**
@@ -43,5 +43,8 @@ class Config extends AbstractSingleModel
     protected static $strTable = 'tl_magickimages_config';
 
 
+    /**
+     * {@inheritdoc}
+     */
     protected static $objInstance;
 }
