@@ -15,6 +15,7 @@ use Ferienpass\Model\AbstractSingleModel;
 
 /**
  * Class Config
+ * @property string $implemantation
  * @property string $fallback_extension
  * @property        $advpng_level
  * @property        $advpng_path
@@ -42,11 +43,5 @@ class Config extends AbstractSingleModel
     protected static $strTable = 'tl_magickimages_config';
 
 
-    /**
-     * @return Config
-     */
-    public static function getInstance()
-    {
-        return parent::getInstance();
-    }
+    protected static $objInstance;
 }

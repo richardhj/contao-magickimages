@@ -101,6 +101,6 @@ $container['magickimages.impl.imagick'] = function ($container)
 $container['magickimages.hook'] = $container->share(
 	function ($container)
 	{
-		return $container['magickimages.impl.' . $GLOBALS['TL_CONFIG']['magickimages_implementation']];
+        return $container['magickimages.impl.'.MagickImagesConfig::getInstance()->implementation];
 	}
 );

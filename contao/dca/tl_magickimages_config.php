@@ -54,23 +54,23 @@ $GLOBALS['TL_DCA'][$table] = [
 
     // MetaSubPalettes
     'metasubpalettes' => [
-        'implementation_process' => [
+        'implementation' => [
             'convert_path',
         ],
-        'blur'                   => [
+        'blur'           => [
             'blur_radius',
             'blur_sigma',
         ],
-        'unsharp_mask'           => [
+        'unsharp_mask'   => [
             'unsharp_mask_radius',
             'unsharp_mask_sigma',
             'unsharp_mask_amount',
             'unsharp_mask_threshold',
         ],
-        'optipng'                => [
+        'optipng'        => [
             'optipng_optimization_level',
         ],
-        'advpng'                 => [
+        'advpng'         => [
             'advpng_level',
         ],
     ],
@@ -85,14 +85,20 @@ $GLOBALS['TL_DCA'][$table] = [
         'implementation'             => [
             'label'     => &$GLOBALS['TL_LANG'][$table]['implementation'],
             'inputType' => 'select',
-            'options'   => $GLOBALS['IMPLEMENTATIONS'],
+            'options'   => $GLOBALS['MAGICKIMAGES_IMPLEMENTATIONS'],
             'reference' => &$GLOBALS['TL_LANG']['implementation'],
-            'eval'      => ['submitOnChange' => true, 'tl_class' => 'w50 clr'],
+            'eval'      => [
+                'submitOnChange' => true,
+                'tl_class'       => 'w50 clr',
+            ],
         ],
         'convert_path'               => [
             'label'     => &$GLOBALS['TL_LANG'][$table]['convert_path'],
             'inputType' => 'text',
-            'eval'      => ['submitOnChange' => true, 'tl_class' => 'w50'],
+            'eval'      => [
+                'submitOnChange' => true,
+                'tl_class'       => 'w50',
+            ],
         ],
         'filter'                     => [
             'label'     => &$GLOBALS['TL_LANG'][$table]['filter'],
