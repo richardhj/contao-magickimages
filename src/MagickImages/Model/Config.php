@@ -1,11 +1,14 @@
 <?php
+
 /**
- * E-POSTBUSINESS API integration for Contao Open Source CMS
+ * MagickImages
+ * ImageMagick integration for Contao Open Source CMS
  *
- * Copyright (c) 2015-2016 Richard Henkenjohann
+ * PHP Version 5.3
  *
- * @package E-POST
- * @author  Richard Henkenjohann <richard-epost@henkenjohann.me>
+ * @author     Richard Henkenjohann 2016
+ * @package    MagickImages
+ * @license    LGPL-3.0+
  */
 
 namespace MagickImages\Model;
