@@ -13,11 +13,15 @@
  * @license    LGPL-3.0+
  */
 
+use MagickImages\Model\Config as MagickImagesConfig;
+
+
 $container['magickimages.optimizer.advpng'] = function ($container)
 {
 	$optimizer = new \MagickImages\Optimizer\AdvPngOptimizer();
-	$optimizer->setPath($GLOBALS['TL_CONFIG']['magickimages_advpng_path'])
-		->setLevel($GLOBALS['TL_CONFIG']['magickimages_advpng_level']);
+    $optimizer
+        ->setPath(MagickImagesConfig::getInstance()->advpng_path)
+        ->setLevel(MagickImagesConfig::getInstance()->advpng_level);
 
 	return $optimizer;
 };
@@ -25,8 +29,9 @@ $container['magickimages.optimizer.advpng'] = function ($container)
 $container['magickimages.optimizer.optipng'] = function ($container)
 {
 	$optimizer = new \MagickImages\Optimizer\OptiPngOptimizer();
-	$optimizer->setPath($GLOBALS['TL_CONFIG']['magickimages_optipng_path'])
-		->setLevel($GLOBALS['TL_CONFIG']['magickimages_optipng_optimization_level']);
+    $optimizer
+        ->setPath(MagickImagesConfig::getInstance()->optipng_path)
+        ->setLevel(MagickImagesConfig::getInstance()->optipng_optimization_level);
 
 	return $optimizer;
 };
@@ -34,7 +39,7 @@ $container['magickimages.optimizer.optipng'] = function ($container)
 $container['magickimages.optimizer.pngrewrite'] = function ($container)
 {
 	$optimizer = new \MagickImages\Optimizer\PngRewriteOptimizer();
-	$optimizer->setPath($GLOBALS['TL_CONFIG']['magickimages_pngrewrite_path']);
+    $optimizer->setPath(MagickImagesConfig::getInstance()->pngrewrite_path);
 
 	return $optimizer;
 };
@@ -54,18 +59,19 @@ $container['magickimages.optimizer'] = function ($container)
 $container['magickimages.impl.process'] = function ($container)
 {
 	$hook = new \MagickImages\Hook\Implementation\Process();
-	$hook->setPath($GLOBALS['TL_CONFIG']['magickimages_convert_path'])
+    $hook
+        ->setPath(MagickImagesConfig::getInstance()->convert_path)
 		->setJpegQuality($GLOBALS['TL_CONFIG']['jpgQuality'])
 		->setSmhEnabled($GLOBALS['TL_CONFIG']['useFTP'])
-		->setFilter($GLOBALS['TL_CONFIG']['magickimages_filter'])
-		->setBlurEnabled($GLOBALS['TL_CONFIG']['magickimages_blur'])
-		->setBlurRadius($GLOBALS['TL_CONFIG']['magickimages_blur_radius'])
-		->setBlurSigma($GLOBALS['TL_CONFIG']['magickimages_blur_sigma'])
-		->setUnsharpMaskEnabled($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask'])
-		->setUnsharpMaskRadius($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_radius'])
-		->setUnsharpMaskSigma($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_sigma'])
-		->setUnsharpMaskAmount($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_amount'])
-		->setUnsharpMaskThreshold($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_threshold'])
+        ->setFilter(MagickImagesConfig::getInstance()->filter)
+        ->setBlurEnabled(MagickImagesConfig::getInstance()->blur)
+        ->setBlurRadius(MagickImagesConfig::getInstance()->blur_radius)
+        ->setBlurSigma(MagickImagesConfig::getInstance()->blur_sigma)
+        ->setUnsharpMaskEnabled(MagickImagesConfig::getInstance()->unsharp_mask)
+        ->setUnsharpMaskRadius(MagickImagesConfig::getInstance()->unsharp_mask_radius)
+        ->setUnsharpMaskSigma(MagickImagesConfig::getInstance()->unsharp_mask_sigma)
+        ->setUnsharpMaskAmount(MagickImagesConfig::getInstance()->unsharp_mask_amount)
+        ->setUnsharpMaskThreshold(MagickImagesConfig::getInstance()->unsharp_mask_threshold)
 		->setOptimizer($container['magickimages.optimizer']);
 
 	return $hook;
@@ -74,17 +80,18 @@ $container['magickimages.impl.process'] = function ($container)
 $container['magickimages.impl.imagick'] = function ($container)
 {
 	$hook = new \MagickImages\Hook\Implementation\Imagick();
-	$hook->setJpegQuality($GLOBALS['TL_CONFIG']['jpgQuality'])
-		->setSmhEnabled($GLOBALS['TL_CONFIG']['useFTP'])
-		->setFilter($GLOBALS['TL_CONFIG']['magickimages_filter'])
-		->setBlurEnabled($GLOBALS['TL_CONFIG']['magickimages_blur'])
-		->setBlurRadius($GLOBALS['TL_CONFIG']['magickimages_blur_radius'])
-		->setBlurSigma($GLOBALS['TL_CONFIG']['magickimages_blur_sigma'])
-		->setUnsharpMaskEnabled($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask'])
-		->setUnsharpMaskRadius($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_radius'])
-		->setUnsharpMaskSigma($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_sigma'])
-		->setUnsharpMaskAmount($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_amount'])
-		->setUnsharpMaskThreshold($GLOBALS['TL_CONFIG']['magickimages_unsharp_mask_threshold']);
+    $hook
+        ->setJpegQuality($GLOBALS['TL_CONFIG']['jpgQuality'])
+        ->setSmhEnabled($GLOBALS['TL_CONFIG']['useFTP'])
+        ->setFilter(MagickImagesConfig::getInstance()->filter)
+        ->setBlurEnabled(MagickImagesConfig::getInstance()->blur)
+        ->setBlurRadius(MagickImagesConfig::getInstance()->blur_radius)
+        ->setBlurSigma(MagickImagesConfig::getInstance()->blur_sigma)
+        ->setUnsharpMaskEnabled(MagickImagesConfig::getInstance()->unsharp_mask)
+        ->setUnsharpMaskRadius(MagickImagesConfig::getInstance()->unsharp_mask_radius)
+        ->setUnsharpMaskSigma(MagickImagesConfig::getInstance()->unsharp_mask_sigma)
+        ->setUnsharpMaskAmount(MagickImagesConfig::getInstance()->unsharp_mask_amount)
+        ->setUnsharpMaskThreshold(MagickImagesConfig::getInstance()->unsharp_mask_threshold);
 
 	//@todo no optimizer supported because they run as process?
 
