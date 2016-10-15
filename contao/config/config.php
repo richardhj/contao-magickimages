@@ -19,7 +19,7 @@
  */
 $GLOBALS['BE_MOD']['system']['magickimages_config'] = [
     'tables' => [MagickImages\Model\Config::getTable()],
-    'icon'   => 'settings.gif',
+//    'icon'   => 'settings.gif',
 ];
 
 
