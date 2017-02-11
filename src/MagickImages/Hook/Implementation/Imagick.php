@@ -41,12 +41,6 @@ class Imagick implements IHook
 
 
 	/**
-	 * @var bool
-	 */
-	protected $smhEnabled;
-
-
-	/**
 	 * @var string
 	 */
 	protected $filter;
@@ -139,28 +133,6 @@ class Imagick implements IHook
 	public function getJpegQuality()
 	{
 		return $this->jpegQuality;
-	}
-
-
-	/**
-	 * @param boolean $smhEnabled
-	 *
-	 * @return $this
-	 */
-	public function setSmhEnabled($smhEnabled)
-	{
-		$this->smhEnabled = (bool)$smhEnabled;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return boolean
-	 */
-	public function isSmhEnabled()
-	{
-		return $this->smhEnabled;
 	}
 
 
@@ -373,13 +345,6 @@ class Imagick implements IHook
 		}
 
 		$strCacheName = $this->process($image, $width, $height, $mode, $strCacheName, $file);
-
-		// Set the file permissions when the Safe Mode Hack is used
-		if ($this->smhEnabled)
-		{
-			\Files::getInstance()
-				->chmod($strCacheName, 0644);
-		}
 
 		if ($strTarget)
 		{

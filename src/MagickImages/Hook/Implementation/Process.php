@@ -48,12 +48,6 @@ class Process implements IHook
 
 
 	/**
-	 * @var bool
-	 */
-	protected $blnSmhEnabled;
-
-
-	/**
 	 * @var string
 	 */
 	protected $strFilter;
@@ -168,28 +162,6 @@ class Process implements IHook
 	public function getJpegQuality()
 	{
 		return $this->fltJpegQuality;
-	}
-
-
-	/**
-	 * @param boolean $blnSmhEnabled
-	 *
-	 * @return $this
-	 */
-	public function setSmhEnabled($blnSmhEnabled)
-	{
-		$this->blnSmhEnabled = (bool)$blnSmhEnabled;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return boolean
-	 */
-	public function isSmhEnabled()
-	{
-		return $this->blnSmhEnabled;
 	}
 
 
@@ -402,13 +374,6 @@ class Process implements IHook
 		}
 
 		$strCacheName = $this->process($image, $strCacheName, $objFile, $objImage);
-
-		// Set the file permissions when the Safe Mode Hack is used
-		if ($this->blnSmhEnabled)
-		{
-			\Files::getInstance()
-				->chmod($strCacheName, 0644);
-		}
 
 		if ($strTarget)
 		{

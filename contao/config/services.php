@@ -56,7 +56,6 @@ $container['magickimages.impl.process'] = function ($container)
 	$hook = new \MagickImages\Hook\Implementation\Process();
 	$hook->setPath($GLOBALS['TL_CONFIG']['magickimages_convert_path'])
 		->setJpegQuality($GLOBALS['TL_CONFIG']['jpgQuality'])
-		->setSmhEnabled($GLOBALS['TL_CONFIG']['useFTP'])
 		->setFilter($GLOBALS['TL_CONFIG']['magickimages_filter'])
 		->setBlurEnabled($GLOBALS['TL_CONFIG']['magickimages_blur'])
 		->setBlurRadius($GLOBALS['TL_CONFIG']['magickimages_blur_radius'])
@@ -75,7 +74,6 @@ $container['magickimages.impl.imagick'] = function ($container)
 {
 	$hook = new \MagickImages\Hook\Implementation\Imagick();
 	$hook->setJpegQuality($GLOBALS['TL_CONFIG']['jpgQuality'])
-		->setSmhEnabled($GLOBALS['TL_CONFIG']['useFTP'])
 		->setFilter($GLOBALS['TL_CONFIG']['magickimages_filter'])
 		->setBlurEnabled($GLOBALS['TL_CONFIG']['magickimages_blur'])
 		->setBlurRadius($GLOBALS['TL_CONFIG']['magickimages_blur_radius'])
