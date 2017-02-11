@@ -13,6 +13,8 @@
 
 namespace MagickImages;
 
+use MagickImages\Hook\IHook;
+
 
 /**
  * Class File
@@ -34,16 +36,14 @@ class File extends \Contao\File
 		switch ($strKey)
 		{
 			case 'imageSize':
-				// Check default routine first
+				global $container;
+
+				// Process default routine first
 				parent::__get($strKey);
 
-				if ($this->isImage && empty($this->arrImageSize))
-				{
-					$this->arrImageSize = @getimagesize(TL_ROOT . '/' . $this->strFile); //@todo this helps for psd files. what's about a pdf file?
-					# if we want to use a ImageMagick function: add a static getImageSize() to IHook
-				}
-
-				return $this->arrImageSize;
+				/** @var IHook $hook */
+				$hook = $container['magickimages.hook'];
+				return $hook->fetchImageSize($this);
 				break;
 
 			case 'isImage':

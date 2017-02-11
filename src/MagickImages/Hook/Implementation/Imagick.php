@@ -359,6 +359,22 @@ class Imagick implements IHook
 	}
 
 
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchImageSize($file)
+    {
+        $imageSize = $file->imageSize;
+
+        if ($file->isImage && empty($imageSize))
+        {
+            $imageSize = @getimagesize(TL_ROOT . '/' . $file->path);
+        }
+
+        return $imageSize;
+    }
+
+
 	/**
 	 * @param string  $image
 	 * @param integer $width

@@ -58,4 +58,15 @@ interface IHook
 	 * @return
 	 */
 	public function get($image, $width, $height, $mode, $strCacheName, \File $file, $strTarget, $objImage);
+
+
+    /**
+     * Fetch the image size array for a file. Contao handles this for plain images and svg images exclusively. This
+     * function extends the functionality for psd, pdf and maybe even more file formats.
+     *
+     * @param \File|\MagickImages\File $file
+     *
+     * @return array
+     */
+    public function fetchImageSize($file);
 }
