@@ -399,6 +399,7 @@ class Process implements IHook
 
         $imageSize = @getimagesize(TL_ROOT.'/'.$file->path);
 
+        // TODO extension check
         if (in_array($file->extension, ['pdf', 'eps'])) {
             $processBuilder = new ProcessBuilder();
             $processBuilder->add(preg_replace('/convert$/', 'identify', $this->strPath));
@@ -445,10 +446,23 @@ class Process implements IHook
         $objProcessBuilder = new ProcessBuilder();
         $objProcessBuilder->add($this->strPath);
 
+        // TODO extension check
+        if (in_array($objFile->extension, ['pdf', 'eps', 'svg'])) {
+            $objProcessBuilder->add('-density');
+            // TODO calculate density
+            $objProcessBuilder->add('300');
+        }
+
+        // Set to RGB profile
+        // TODO
+//        $objProcessBuilder->add('-colorspace');
+//        $objProcessBuilder->add('rgb');
+
         // set the source path
         $strSourcePath = TL_ROOT.'/'.$image;
 
         // only render a pdf's first page or psd's full layer
+        // TODO extension check
         if (in_array($objFile->extension, ['pdf', 'psd', 'eps'])) {
             $strSourcePath .= '[0]';
         }
@@ -464,9 +478,6 @@ class Process implements IHook
             $objProcessBuilder->add('-quality');
             $objProcessBuilder->add($this->fltJpegQuality);
         }
-
-        $objProcessBuilder->add('-colorspace');
-        $objProcessBuilder->add('rgb');
 
         $this->resizeAndCrop($objImage, $objProcessBuilder);
         $this->filterImage($objProcessBuilder);
