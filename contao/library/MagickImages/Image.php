@@ -27,19 +27,18 @@ namespace MagickImages;
 class Image extends \Contao\Image
 {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getCacheName()
-	{
-		$strFallbackFormat = \Config::get('magickimages_fallback_extension') ?: 'jpg';
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheName()
+    {
+        $strFallbackFormat = \Config::get('magickimages_fallback_extension') ?: 'jpg';
 
-		if (!in_array($this->fileObj->extension, ['jpg', 'png', 'gif']))
-		{
-			// Change file suffix
-			return substr(parent::getCacheName(), 0, -strlen($this->fileObj->extension)) . $strFallbackFormat;
-		}
+        if (!in_array($this->fileObj->extension, ['jpg', 'png', 'gif'])) {
+            // Change file suffix
+            return substr(parent::getCacheName(), 0, -strlen($this->fileObj->extension)).$strFallbackFormat;
+        }
 
-		return parent::getCacheName();
-	}
+        return parent::getCacheName();
+    }
 }

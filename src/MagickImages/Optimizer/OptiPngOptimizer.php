@@ -26,93 +26,90 @@ use Symfony\Component\Process\ProcessBuilder;
 class OptiPngOptimizer implements IOptimizer
 {
 
-	/**
-	 * @var string
-	 */
-	protected $strPath = 'optipng';
+    /**
+     * @var string
+     */
+    protected $strPath = 'optipng';
 
 
-	/**
-	 * @var int
-	 */
-	protected $intLevel = 2;
+    /**
+     * @var int
+     */
+    protected $intLevel = 2;
 
 
-	/**
-	 * @param string $strPath
-	 *
-	 * @return $this
-	 */
-	public function setPath($strPath)
-	{
-		$this->strPath = (string)$strPath;
+    /**
+     * @param string $strPath
+     *
+     * @return $this
+     */
+    public function setPath($strPath)
+    {
+        $this->strPath = (string)$strPath;
 
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getPath()
-	{
-		return $this->strPath;
-	}
+        return $this;
+    }
 
 
-	/**
-	 * @param int $level
-	 *
-	 * @return $this
-	 */
-	public function setLevel($level)
-	{
-		$this->intLevel = (int)$level;
-
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->strPath;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getLevel()
-	{
-		return $this->intLevel;
-	}
+    /**
+     * @param int $level
+     *
+     * @return $this
+     */
+    public function setLevel($level)
+    {
+        $this->intLevel = (int)$level;
+
+        return $this;
+    }
 
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function optimize($strImage, $strTarget = null)
-	{
-		$objFile = new \File($strImage, true);
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->intLevel;
+    }
 
-		if (!$strTarget)
-		{
-			$strTarget = $strImage;
-		}
 
-		if ($objFile->exists() && in_array($objFile->extension, array('png', 'bmp', 'gif', 'pnm', 'tiff')))
-		{
-			$objProcessBuilder = new ProcessBuilder();
-			$objProcessBuilder
-				->add($this->strPath)
-				->add('-o')
-				->add($this->intLevel)
-				->add('-out')
-				->add(TL_ROOT . '/' . $strTarget)
-				->add(TL_ROOT . '/' . $strImage);
-			$objProcess = $objProcessBuilder->getProcess();
-			$objProcess->run();
+    /**
+     * {@inheritdoc}
+     */
+    public function optimize($strImage, $strTarget = null)
+    {
+        $objFile = new \File($strImage, true);
 
-			if (!$objProcess->isSuccessful())
-			{
-				throw new \RuntimeException('Could not execute optipng: ' . $objProcess->getErrorOutput());
-			}
-		}
+        if (!$strTarget) {
+            $strTarget = $strImage;
+        }
 
-		return $strTarget;
-	}
+        if ($objFile->exists() && in_array($objFile->extension, ['png', 'bmp', 'gif', 'pnm', 'tiff'])) {
+            $objProcessBuilder = new ProcessBuilder();
+            $objProcessBuilder
+                ->add($this->strPath)
+                ->add('-o')
+                ->add($this->intLevel)
+                ->add('-out')
+                ->add(TL_ROOT.'/'.$strTarget)
+                ->add(TL_ROOT.'/'.$strImage);
+            $objProcess = $objProcessBuilder->getProcess();
+            $objProcess->run();
+
+            if (!$objProcess->isSuccessful()) {
+                throw new \RuntimeException('Could not execute optipng: '.$objProcess->getErrorOutput());
+            }
+        }
+
+        return $strTarget;
+    }
 }

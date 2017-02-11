@@ -25,13 +25,13 @@ namespace MagickImages\Optimizer;
 interface IOptimizer
 {
 
-	/**
-	 * Optimize an image.
-	 *
-	 * @param string $strImage  The image path
-	 * @param string $strTarget The target path, if its not set, use the $image path.
-	 *
-	 * @return string Return the optimized image path.
-	 */
-	public function optimize($strImage, $strTarget = null);
+    /**
+     * Optimize an image.
+     *
+     * @param string $strImage  The image path
+     * @param string $strTarget The target path, if its not set, use the $image path.
+     *
+     * @return string Return the optimized image path.
+     */
+    public function optimize($strImage, $strTarget = null);
 }

@@ -17,24 +17,24 @@ namespace MagickImages\Helper;
 
 class Dca
 {
-	/**
-	 * Check for valid fallback extension and convert lowercase
-	 * @category save_callback
-	 *
-	 * @param mixed $varValue
-	 *
-	 * @return string
-	 * @throws \Exception
-	 */
-	public function checkValidFallbackExtension($varValue)
-	{
-		$varValue = strtolower($varValue);
+    /**
+     * Check for valid fallback extension and convert lowercase
+     *
+     * @category save_callback
+     *
+     * @param mixed $varValue
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function checkValidFallbackExtension($varValue)
+    {
+        $varValue = strtolower($varValue);
 
-		if (!in_array($varValue, ['jpg', 'png', 'gif']))
-		{
-			throw new \Exception('Extension is not allowed.');
-		}
+        if (!in_array($varValue, ['jpg', 'png', 'gif'])) {
+            throw new \Exception('Extension is not allowed.');
+        }
 
-		return $varValue;
-	}
+        return $varValue;
+    }
 }

@@ -26,61 +26,58 @@ use Symfony\Component\Process\ProcessBuilder;
 class PngRewriteOptimizer implements IOptimizer
 {
 
-	/**
-	 * @var string
-	 */
-	protected $strPath = 'pngrewrite';
+    /**
+     * @var string
+     */
+    protected $strPath = 'pngrewrite';
 
 
-	/**
-	 * @param string $strPath
-	 *
-	 * @return $this
-	 */
-	public function setPath($strPath)
-	{
-		$this->strPath = (string)$strPath;
+    /**
+     * @param string $strPath
+     *
+     * @return $this
+     */
+    public function setPath($strPath)
+    {
+        $this->strPath = (string)$strPath;
 
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getPath()
-	{
-		return $this->strPath;
-	}
+        return $this;
+    }
 
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function optimize($strImage, $strTarget = null)
-	{
-		$objFile = new \File($strImage, true);
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->strPath;
+    }
 
-		if (!$strTarget)
-		{
-			$strTarget = $strImage;
-		}
 
-		if ($objFile->exists() && $objFile->extension == 'png')
-		{
-			$objProcessBuilder = new ProcessBuilder();
-			$objProcessBuilder->add($this->strPath);
-			$objProcessBuilder->add(TL_ROOT . '/' . $strImage);
-			$objProcessBuilder->add(TL_ROOT . '/' . $strTarget);
-			$objProcess = $objProcessBuilder->getProcess();
-			$objProcess->run();
+    /**
+     * {@inheritdoc}
+     */
+    public function optimize($strImage, $strTarget = null)
+    {
+        $objFile = new \File($strImage, true);
 
-			if (!$objProcess->isSuccessful())
-			{
-				throw new \RuntimeException('Could not execute pngrewrite: ' . $objProcess->getErrorOutput());
-			}
-		}
+        if (!$strTarget) {
+            $strTarget = $strImage;
+        }
 
-		return $strTarget;
-	}
+        if ($objFile->exists() && 'png' === $objFile->extension) {
+            $objProcessBuilder = new ProcessBuilder();
+            $objProcessBuilder->add($this->strPath);
+            $objProcessBuilder->add(TL_ROOT.'/'.$strImage);
+            $objProcessBuilder->add(TL_ROOT.'/'.$strTarget);
+            $objProcess = $objProcessBuilder->getProcess();
+            $objProcess->run();
+
+            if (!$objProcess->isSuccessful()) {
+                throw new \RuntimeException('Could not execute pngrewrite: '.$objProcess->getErrorOutput());
+            }
+        }
+
+        return $strTarget;
+    }
 }

@@ -26,120 +26,115 @@ use Symfony\Component\Process\ProcessBuilder;
 class AdvPngOptimizer implements IOptimizer
 {
 
-	/**
-	 * @var string
-	 */
-	protected $strPath = 'advpng';
+    /**
+     * @var string
+     */
+    protected $strPath = 'advpng';
 
 
-	/**
-	 * @var string
-	 */
-	protected $strLevel = 'normal';
+    /**
+     * @var string
+     */
+    protected $strLevel = 'normal';
 
 
-	/**
-	 * @param mixed $strPath
-	 *
-	 * @return $this
-	 */
-	public function setPath($strPath)
-	{
-		$this->strPath = (string)$strPath;
+    /**
+     * @param mixed $strPath
+     *
+     * @return $this
+     */
+    public function setPath($strPath)
+    {
+        $this->strPath = (string)$strPath;
 
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getPath()
-	{
-		return $this->strPath;
-	}
+        return $this;
+    }
 
 
-	/**
-	 * @param string $strLevel
-	 *
-	 * @return $this
-	 */
-	public function setLevel($strLevel)
-	{
-		$this->strLevel = (string)$strLevel;
-
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->strPath;
+    }
 
 
-	/**
-	 * @return string
-	 */
-	public function getLevel()
-	{
-		return $this->strLevel;
-	}
+    /**
+     * @param string $strLevel
+     *
+     * @return $this
+     */
+    public function setLevel($strLevel)
+    {
+        $this->strLevel = (string)$strLevel;
+
+        return $this;
+    }
 
 
-	/**
-	 * {@inheritdoc}
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 */
-	public function optimize($strImage, $strTarget = null)
-	{
-		$objFile = new \File($strImage, true);
+    /**
+     * @return string
+     */
+    public function getLevel()
+    {
+        return $this->strLevel;
+    }
 
-		if (!$strTarget)
-		{
-			$strTarget = $strImage;
-		}
 
-		if ($objFile->exists() && $objFile->extension == 'png')
-		{
-			// advpng does not support output files,
-			// so we need to copy the file before optimize it
-			if ($strImage != $strTarget)
-			{
-				\Files::getInstance()
-					->copy($strImage, $strTarget);
-			}
+    /**
+     * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    public function optimize($strImage, $strTarget = null)
+    {
+        $objFile = new \File($strImage, true);
 
-			$objProcessBuilder = new ProcessBuilder();
-			$objProcessBuilder->add($this->strPath);
-			$objProcessBuilder->add('-z');
+        if (!$strTarget) {
+            $strTarget = $strImage;
+        }
 
-			switch ($this->strLevel)
-			{
-				case 'store':
-					$objProcessBuilder->add('--shrink-store');
-					break;
-				case 'fast':
-					$objProcessBuilder->add('--shrink-fast');
-					break;
-				case 'extra':
-					$objProcessBuilder->add('--shrink-extra');
-					break;
-				case 'insane':
-					$objProcessBuilder->add('--shrink-insane');
-					break;
-				default:
-					$objProcessBuilder->add('--shrink-normal');
-					break;
-			}
+        if ($objFile->exists() && $objFile->extension == 'png') {
+            // advpng does not support output files,
+            // so we need to copy the file before optimize it
+            if ($strImage != $strTarget) {
+                \Files::getInstance()
+                    ->copy($strImage, $strTarget);
+            }
 
-			$objProcessBuilder->add(TL_ROOT . '/' . $strTarget);
-			$objProcess = $objProcessBuilder->getProcess();
-			$objProcess->run();
+            $objProcessBuilder = new ProcessBuilder();
+            $objProcessBuilder->add($this->strPath);
+            $objProcessBuilder->add('-z');
 
-			if (!$objProcess->isSuccessful())
-			{
-				throw new \RuntimeException('Could not execute advpng: ' . $objProcess->getErrorOutput());
-			}
+            switch ($this->strLevel) {
+                case 'store':
+                    $objProcessBuilder->add('--shrink-store');
+                    break;
+                case 'fast':
+                    $objProcessBuilder->add('--shrink-fast');
+                    break;
+                case 'extra':
+                    $objProcessBuilder->add('--shrink-extra');
+                    break;
+                case 'insane':
+                    $objProcessBuilder->add('--shrink-insane');
+                    break;
+                default:
+                    $objProcessBuilder->add('--shrink-normal');
+                    break;
+            }
 
-			return $strTarget;
-		}
+            $objProcessBuilder->add(TL_ROOT.'/'.$strTarget);
+            $objProcess = $objProcessBuilder->getProcess();
+            $objProcess->run();
 
-		return $strImage;
-	}
+            if (!$objProcess->isSuccessful()) {
+                throw new \RuntimeException('Could not execute advpng: '.$objProcess->getErrorOutput());
+            }
+
+            return $strTarget;
+        }
+
+        return $strImage;
+    }
 }

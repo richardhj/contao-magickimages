@@ -28,37 +28,36 @@ use MagickImages\Hook\IHook;
 class File extends \Contao\File
 {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __get($strKey)
-	{
-		switch ($strKey)
-		{
-			case 'imageSize':
-				global $container;
+    /**
+     * {@inheritdoc}
+     */
+    public function __get($strKey)
+    {
+        switch ($strKey) {
+            case 'imageSize':
+                global $container;
 
-				// Process default routine first
+                // Process default routine first
                 $this->arrImageSize = parent::__get($strKey);
 
                 if (!empty($this->arrImageSize)) {
                     return $this->arrImageSize;
                 }
 
-				/** @var IHook $hook */
-				$hook = $container['magickimages.hook'];
-				$this->arrImageSize = $hook->fetchImageSize($this);
+                /** @var IHook $hook */
+                $hook               = $container['magickimages.hook'];
+                $this->arrImageSize = $hook->fetchImageSize($this);
 
-				return $this->arrImageSize;
-				break;
+                return $this->arrImageSize;
+                break;
 
-			case 'isImage':
-				return in_array($this->extension, trimsplit(',', \Config::get('validImageTypes')));
-				break;
+            case 'isImage':
+                return in_array($this->extension, trimsplit(',', \Config::get('validImageTypes')));
+                break;
 
-			default:
-				return parent::__get($strKey);
-				break;
-		}
-	}
+            default:
+                return parent::__get($strKey);
+                break;
+        }
+    }
 }

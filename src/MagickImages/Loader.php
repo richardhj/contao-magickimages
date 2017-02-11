@@ -14,6 +14,7 @@
  */
 
 namespace MagickImages;
+
 use MagickImages\Hook\IHook;
 
 
@@ -26,11 +27,11 @@ use MagickImages\Hook\IHook;
 class Loader
 {
 
-	/**
-	 * @return IHook
-	 */
-	static public function getInstance()
-	{
-		return $GLOBALS['container']['magickimages.hook'];
-	}
+    /**
+     * @return IHook
+     */
+    static public function getInstance()
+    {
+        return $GLOBALS['container']['magickimages.hook'];
+    }
 }
