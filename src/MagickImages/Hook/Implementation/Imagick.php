@@ -371,6 +371,8 @@ class Imagick implements IHook
             $imageSize = @getimagesize(TL_ROOT . '/' . $file->path);
         }
 
+        // TODO psd works, pdf not yet
+
         return $imageSize;
     }
 

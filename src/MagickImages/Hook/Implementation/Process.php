@@ -395,9 +395,34 @@ class Process implements IHook
     {
         $imageSize = $file->imageSize;
 
-        if ($file->isImage && empty($imageSize))
-        {
-            $imageSize = @getimagesize(TL_ROOT . '/' . $file->path);
+        if (!$file->isImage) {
+            return $imageSize;
+        }
+
+        $imageSize = @getimagesize(TL_ROOT.'/'.$file->path);
+
+        if ('pdf' === strtolower($file->extension)) {
+            $processBuilder = new ProcessBuilder();
+            $processBuilder->add(preg_replace('/convert$/', 'identify', $this->strPath));
+            $processBuilder->add('-format');
+            $processBuilder->add('"%[pdf:HiResBoundingBox]"');
+            $processBuilder->add('-format');
+            $processBuilder->add('"%wx%h"');
+
+            $path = TL_ROOT.'/'.$file->path;
+            // Only use a pdf's first page
+            $path .= '[0]';
+
+            $processBuilder->add($path);
+
+            $process = $processBuilder->getProcess();
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException('Could not fetch image size: '.$process->getErrorOutput());
+            }
+
+            $imageSize = explode('x', trim($process->getOutput(), '"'));
         }
 
         return $imageSize;
