@@ -39,11 +39,17 @@ class File extends \Contao\File
 				global $container;
 
 				// Process default routine first
-				parent::__get($strKey);
+                $this->arrImageSize = parent::__get($strKey);
+
+                if (!empty($this->arrImageSize)) {
+                    return $this->arrImageSize;
+                }
 
 				/** @var IHook $hook */
 				$hook = $container['magickimages.hook'];
-				return $hook->fetchImageSize($this);
+				$this->arrImageSize = $hook->fetchImageSize($this);
+
+				return $this->arrImageSize;
 				break;
 
 			case 'isImage':
