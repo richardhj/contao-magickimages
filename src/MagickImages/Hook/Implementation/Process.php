@@ -399,7 +399,7 @@ class Process implements IHook
 
         $imageSize = @getimagesize(TL_ROOT.'/'.$file->path);
 
-        if ('pdf' === $file->extension) {
+        if (in_array($file->extension, ['pdf', 'eps'])) {
             $processBuilder = new ProcessBuilder();
             $processBuilder->add(preg_replace('/convert$/', 'identify', $this->strPath));
             $processBuilder->add('-format');
@@ -449,7 +449,7 @@ class Process implements IHook
         $strSourcePath = TL_ROOT.'/'.$image;
 
         // only render a pdf's first page or psd's full layer
-        if (in_array($objFile->extension, ['pdf', 'psd'])) {
+        if (in_array($objFile->extension, ['pdf', 'psd', 'eps'])) {
             $strSourcePath .= '[0]';
         }
 
@@ -464,6 +464,9 @@ class Process implements IHook
             $objProcessBuilder->add('-quality');
             $objProcessBuilder->add($this->fltJpegQuality);
         }
+
+        $objProcessBuilder->add('-colorspace');
+        $objProcessBuilder->add('rgb');
 
         $this->resizeAndCrop($objImage, $objProcessBuilder);
         $this->filterImage($objProcessBuilder);
